@@ -1,0 +1,48 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: install
+      command: "{{ item }}"
+      with_items:
+        - apt-get install -y nodejs build-essential
+        - apt-get install -y curl apt-transport-https ca-certificates
+        - curl --fail -ssL -o setup-nodejs https://deb.nodesource.com/setup_6.x
+        - sudo bash setup-nodejs
+        - apt-get install -y nodejs build-essential
+      when: ansible_facts['os_family'] == "Debian"
+    - name:
+      command: "{{ item }}"
+      with_items:
+        - yum install -y epel-release curl
+        - curl --fail -sSL -o setup-nodejs https://rpm.nodesource.com/setup_6.x
+        - bash setup-nodejs
+        - sudo yum install -y nodejs gcc-c++ make
+      when: ansible_facts['os_family'] == "Red Hat"
+    - name:
+      command: "{{ item }}"
+      with_items:
+        - apt-get install -y dirmngr gnupg
+        - apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
+        - apt-get install -y apt-transport-https ca-certificates
+      when: ansible_distribution == 'Ubuntu'
+    - name:
+      command: "{{ item }}"
+      with_items:
+        - sh -c 'echo deb https://oss-binaries.phusionpassenger.com/apt/passenger bionic main > /etc/apt/sources.list.d/passenger.list'
+        - apt-get update
+        - apt-get install -y libapache2-mod-passenger
+      when:
+        - ansible_distribution == 'Ubuntu'
+        - ansible_distribution_version == "18.04"
+    - name:
+      command: "{{ item }}"
+      with_items:
+        - sudo sh -c 'echo deb https://oss-binaries.phusionpassenger.com/apt/passenger xenial main > /etc/apt/sources.list.d/passenger.list'
+        - apt-get update
+        - apt-get install -y libapache2-mod-passenger
+      when:
+        - ansible_distribution == 'Ubuntu' 
+        - ansible_distribution_version == "16.04"
+
+
