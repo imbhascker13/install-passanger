@@ -3,7 +3,7 @@ node {
   stage('Git-Checkout') {
    git 'https://github.com/AbhishekPattnaik04/passengerInstallation.git'
   }
-  stage('ansible deploy'){
+  stage('Running playbbok script'){
   sh label: 'ansible', script: ' ansible-playbook -i inventory passenger.yml -u Shyam'
 }
 }
