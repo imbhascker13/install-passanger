@@ -4,6 +4,6 @@ node {
    git 'https://github.com/imbhascker13/install-passanger.git'
   }
   stage('Running playbbok script'){
-  sh label: 'ansible', script: 'ansible-playbook -i inventory passenger.yml'
+  sh label: 'ansible', script: 'ansible-playbook passenger.yml'
 }
 }
