@@ -4,6 +4,6 @@ node {
    git 'https://github.com/AbhishekPattnaik04/passengerInstallation.git'
   }
   stage('ansible deploy'){
-  sh label: 'ansible', script: ' ansible-playbook -i inventory playbook.yml -u Shyam'
+  sh label: 'ansible', script: ' ansible-playbook -i inventory passenger.yml -u Shyam'
 }
 }
