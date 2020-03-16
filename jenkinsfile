@@ -6,4 +6,7 @@ node {
   stage('Running playbbok script'){
   sh label: 'ansible', script: 'ansible-playbook passenger.yml'
 }
+ stage('Downstream Build -- Docker Deployment'){
+	 build 'create-apache-instances'
+	}
 }
